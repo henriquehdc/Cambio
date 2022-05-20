@@ -1,7 +1,10 @@
 package br.espm.cambio;
 
+import java.util.UUID;
+
 public class Moeda {
     
+    private UUID id;
     private String nome;
     private String simbolo;
 
@@ -29,4 +32,11 @@ public class Moeda {
         this.simbolo = simbolo;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 }
