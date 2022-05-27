@@ -1,14 +1,10 @@
-package br.espm.cambio;
-
+package br.espm.cambio.MOEDA;
 import java.util.List;
 import java.util.Spliterator;
 import java.util.UUID;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
 import javax.persistence.Entity;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -37,5 +33,21 @@ public class MoedaService {
           vo.setId(UUID.randomUUID()); 
           return moedaRepository.save(new MoedaModel(vo)).to();
         }
+
+        public Moeda findBySimbolo(String simbolo){
+          return  moedaRepository.findBySimbolo(simbolo)
+                        .map(MoedaModel::to)
+                        .orElse(null);
+        }
+
+        public Moeda findById(UUID id) {
+          return moedaRepository.findById(id.toString())
+                      .map(MoedaModel::to)
+                      .orElse(null);
+      }
+
+      public void DeleteById(UUID id){
+        moedaRepository.deleteById(id.toString());
+      }
 
 }

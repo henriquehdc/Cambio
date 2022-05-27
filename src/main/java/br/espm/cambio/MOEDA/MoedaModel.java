@@ -1,4 +1,4 @@
-package br.espm.cambio;
+package br.espm.cambio.MOEDA;
 import java.util.UUID;
 
 import javax.persistence.Column;

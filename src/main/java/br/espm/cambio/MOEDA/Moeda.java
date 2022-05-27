@@ -1,6 +1,10 @@
-package br.espm.cambio;
+package br.espm.cambio.MOEDA;
 
 import java.util.UUID;
+
+//Para rodar
+// mvn clena install
+// java -jar target/cambio-0.0.1-SNAPSHOT.jar
 
 public class Moeda {
     
