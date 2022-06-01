@@ -1,5 +1,6 @@
 package br.espm.cambio;
 
+import java.time.LocalDate;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
@@ -68,7 +69,7 @@ private CotacaoService cotacaoService;
 
     @RequestMapping(path ="/cotacao/{simbolo}/{ano}/{mes}/{dia}" , method = RequestMethod.POST)
     public void savecotacao(@PathVariable String simbolo , @PathVariable String ano, @PathVariable String mes ,@PathVariable String dia , @RequestBody String valor) {
-    String data = ano +"." +mes+"." + dia;
+    LocalDate data = LocalDate.parse(ano +"." +mes+"." + dia);
     UUID moeda = moedaService.findBySimbolo(simbolo).getId(); 
     String valorDouble = valor.replaceAll("[^0-9,.]", "");  
     Double valorDoublefinal = Double.parseDouble(valorDouble);

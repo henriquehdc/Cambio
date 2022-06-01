@@ -15,7 +15,7 @@ public class CotacaoService {
      
     public List<Cotacao> listAll(UUID id){
         return StreamSupport
-    
+   
              //Transforma de iteravel para lista
              .stream(cotacaoRepository.findAll(id.toString()).spliterator(),false )
               .collect(Collectors.toList())
@@ -25,17 +25,9 @@ public class CotacaoService {
              .collect(Collectors.toList());   
     }
 
-    public Cotacao findById(UUID id) {
-      return cotacaoRepository.findById(id.toString())
-                  .map(CotacaoModel::to)
-                  .orElse(null);
-     }
-
-
     public Cotacao create(Cotacao cotacao){  
       cotacao.setId(UUID.randomUUID()); 
       return cotacaoRepository.save(new CotacaoModel(cotacao)).to();
     }
-
 
 }

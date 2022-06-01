@@ -1,6 +1,7 @@
 package br.espm.cambio.COTACAO;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -20,7 +21,7 @@ public class CotacaoModel {
     private String idMoeda;
 
     @Column (name = "dt_data")
-    private String data;
+    private LocalDate data;
 
     @Column (name = "vr_valor")
     private double valor;
