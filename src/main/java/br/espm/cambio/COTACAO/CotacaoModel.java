@@ -1,6 +1,7 @@
 package br.espm.cambio.COTACAO;
 
 import java.sql.Date;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,8 +28,8 @@ public class CotacaoModel {
     public Cotacao to(){
         Cotacao cotacao = new Cotacao();
             cotacao.setData(this.data);
-            cotacao.setId(this.idCotacao);
-            cotacao.setMoeda(this.idMoeda);
+            cotacao.setId(UUID.fromString(this.idCotacao));
+            cotacao.setMoeda(UUID.fromString(this.idMoeda));
             cotacao.setValor(this.valor);
         return cotacao; 
     }
@@ -39,8 +40,8 @@ public class CotacaoModel {
     public CotacaoModel(Cotacao cotacao){
         this.data = cotacao.getData();
         this.valor = cotacao.getValor();
-        this.idCotacao = cotacao.getId();
-        this.idMoeda = cotacao.getMoeda();
+        this.idCotacao = cotacao.getId().toString();
+        this.idMoeda = cotacao.getMoeda().toString();
     }
 
 }

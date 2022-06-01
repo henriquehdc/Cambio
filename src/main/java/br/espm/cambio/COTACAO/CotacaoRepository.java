@@ -1,21 +1,21 @@
 package br.espm.cambio.COTACAO;
 
 import java.util.Optional;
-
+import java.util.UUID;
+import javax.transaction.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 public interface CotacaoRepository extends CrudRepository <CotacaoModel , String>{
     
-    @Override
-    Iterable<CotacaoModel> findAll();
+    //@Override
+   // Iterable<CotacaoModel> findAll();
 
-    @Override
-    Optional<CotacaoModel> findById(String id);
+    @Query ("Select m from CotacaoModel m WHERE UPPER(m.idMoeda) = UPPER(:idMoeda)")
+    Iterable<CotacaoModel> findAll (@Param ("idMoeda") String idMoeda);
 
-    @Query ("SELECT m.idMoeda from cotacao c inner join moeda m on c.idMoeda=m.idMoeda WHERE m.txSimbolo = simbolo")
-    Optional<CotacaoModel> findBySimbolo (@Param ("simbolo") String simbolo);
-    // da um return no id moeda puxando pelo simbolo 
-
+    //@Query ("Select m from CotacaoModel m WHERE UPPER(m.idMoeda) = UPPER(:idMoeda)")
+    //Optional<CotacaoModel> findById (@Param ("idMoeda") String idMoeda);
 }

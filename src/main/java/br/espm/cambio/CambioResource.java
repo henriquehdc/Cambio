@@ -1,9 +1,12 @@
 package br.espm.cambio;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.espm.cambio.COTACAO.Cotacao;
@@ -49,6 +54,7 @@ private CotacaoService cotacaoService;
         return moedaService.findById(uuid);
     }
 
+
     @PostMapping("/moeda")
     public void save(@RequestBody Moeda moeda){
         moedaService.create(moeda);
@@ -60,18 +66,20 @@ private CotacaoService cotacaoService;
         moedaService.DeleteById(uuid);
     }
 
-    @PostMapping("/cotacao/{símbolo}/{ano}/{mes}/{dia} ")
-    public void savecotacao(@PathVariable String simbolo , @PathVariable String ano, @PathVariable String mes ,@PathVariable String dia , @RequestBody Double valor) {
-        String data = ano + mes + dia;
-        Cotacao cotacao = new Cotacao(data, valor); 
-        cotacaoService.create(cotacao);
-        //tenta pegar o id da moeda pelo simbolo e passa como parametro para criar a cotacao
+    @RequestMapping(path ="/cotacao/{simbolo}/{ano}/{mes}/{dia}" , method = RequestMethod.POST)
+    public void savecotacao(@PathVariable String simbolo , @PathVariable String ano, @PathVariable String mes ,@PathVariable String dia , @RequestBody String valor) {
+    String data = ano +"." +mes+"." + dia;
+    UUID moeda = moedaService.findBySimbolo(simbolo).getId(); 
+    String valorDouble = valor.replaceAll("[^0-9,.]", "");  
+    Double valorDoublefinal = Double.parseDouble(valorDouble);
+     Cotacao cotacao = new Cotacao(moeda, data, valorDoublefinal); 
+     cotacaoService.create(cotacao);   
     }
-    
 
     @GetMapping("/cotacao/{simbolo:[A-Z]{3,}}")
-    public Cotacao findCotacaoBySimbolo(@PathVariable String simbolo){
-        return cotacaoService.findBySimbolo(simbolo);        
+    public List<Cotacao> ListCotacaoBySimbolo(@PathVariable String simbolo){
+       UUID id = moedaService.findBySimboloId(simbolo);
+       return cotacaoService.listAll(id);        
     }
-
+  
 }
