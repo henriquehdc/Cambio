@@ -10,12 +10,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface CotacaoRepository extends CrudRepository <CotacaoModel , String>{
     
-    //@Override
-   // Iterable<CotacaoModel> findAll();
-
     @Query ("Select m from CotacaoModel m WHERE UPPER(m.idMoeda) = UPPER(:idMoeda)")
     Iterable<CotacaoModel> findAll (@Param ("idMoeda") String idMoeda);
-
-    //@Query ("Select m from CotacaoModel m WHERE UPPER(m.idMoeda) = UPPER(:idMoeda)")
-    //Optional<CotacaoModel> findById (@Param ("idMoeda") String idMoeda);
 }

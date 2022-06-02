@@ -16,9 +16,7 @@ public class Cotacao {
     public Cotacao(){
     }
 
-    public Cotacao(UUID moeda , LocalDate data, Double valor){
-        this.moeda = moeda;
-        this.data = data;
+    public Cotacao( Double valor){
         this.valor = valor;
     }
 

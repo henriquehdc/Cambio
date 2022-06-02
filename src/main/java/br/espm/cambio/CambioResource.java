@@ -44,7 +44,7 @@ private CotacaoService cotacaoService;
     }
 
 
-    @GetMapping("/moeda/{simbolo:[A-Z]{3,}}")
+    @GetMapping("/moeda/{simbolo:[a-zA-Z]{3}}")
     public Moeda findMoedaBySimbolo(@PathVariable String simbolo) {
         return moedaService.findBySimbolo(simbolo);
     }
@@ -68,16 +68,15 @@ private CotacaoService cotacaoService;
     }
 
     @RequestMapping(path ="/cotacao/{simbolo}/{ano}/{mes}/{dia}" , method = RequestMethod.POST)
-    public void savecotacao(@PathVariable String simbolo , @PathVariable String ano, @PathVariable String mes ,@PathVariable String dia , @RequestBody String valor) {
-    LocalDate data = LocalDate.parse(ano +"." +mes+"." + dia);
-    UUID moeda = moedaService.findBySimbolo(simbolo).getId(); 
-    String valorDouble = valor.replaceAll("[^0-9,.]", "");  
-    Double valorDoublefinal = Double.parseDouble(valorDouble);
-     Cotacao cotacao = new Cotacao(moeda, data, valorDoublefinal); 
-     cotacaoService.create(cotacao);   
+    public void savecotacao(@PathVariable String simbolo , @PathVariable String ano, @PathVariable String mes ,@PathVariable String dia , @RequestBody Cotacao cotacao) {
+        LocalDate data = LocalDate.parse(ano +"-" +mes+"-" + dia);
+        cotacao.setData(data);
+        UUID moeda = moedaService.findBySimbolo(simbolo).getId();  
+        cotacao.setMoeda(moeda);
+        cotacaoService.create(cotacao);   
     }
 
-    @GetMapping("/cotacao/{simbolo:[A-Z]{3,}}")
+    @GetMapping("/cotacao/{simbolo:[a-zA-Z]{3}}")
     public List<Cotacao> ListCotacaoBySimbolo(@PathVariable String simbolo){
        UUID id = moedaService.findBySimboloId(simbolo);
        return cotacaoService.listAll(id);        
