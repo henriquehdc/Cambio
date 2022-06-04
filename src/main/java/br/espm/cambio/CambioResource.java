@@ -43,7 +43,6 @@ private CotacaoService cotacaoService;
         return moedaService.listAll();        
     }
 
-
     @GetMapping("/moeda/{simbolo:[a-zA-Z]{3}}")
     public Moeda findMoedaBySimbolo(@PathVariable String simbolo) {
         return moedaService.findBySimbolo(simbolo);
@@ -54,7 +53,6 @@ private CotacaoService cotacaoService;
         UUID uuid = UUID.fromString(id);
         return moedaService.findById(uuid);
     }
-
 
     @PostMapping("/moeda")
     public void save(@RequestBody Moeda moeda){
@@ -78,7 +76,7 @@ private CotacaoService cotacaoService;
 
     @GetMapping("/cotacao/{simbolo:[a-zA-Z]{3}}")
     public List<Cotacao> ListCotacaoBySimbolo(@PathVariable String simbolo){
-       UUID id = moedaService.findBySimboloId(simbolo);
+       UUID id  = moedaService.findBySimbolo(simbolo).getId(); 
        return cotacaoService.listAll(id);        
     }
   
